@@ -7,6 +7,7 @@ export CLANG_TRIPLE=aarch64-linux-gnu-
 export ARCH=arm64
 export PLATFORM_VERSION=14
 export TARGET_SOC=mt6877
+export TARGET_BUILD_VARIANT=user
 
 export KCFLAGS=-w
 export CONFIG_SECTION_MISMATCH_WARN_ONLY=y
