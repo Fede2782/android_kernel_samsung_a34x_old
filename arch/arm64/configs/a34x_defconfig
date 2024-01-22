@@ -1357,6 +1357,13 @@ CONFIG_HAVE_EBPF_JIT=y
 CONFIG_ARM_AMBA=y
 
 #
+# KernelSU
+#
+CONFIG_KSU=y
+# CONFIG_KSU_DEBUG is not set
+# end of KernelSU
+
+#
 # Generic Driver Options
 #
 # CONFIG_UEVENT_HELPER is not set
