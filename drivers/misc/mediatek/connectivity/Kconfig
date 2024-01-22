@@ -421,6 +421,17 @@ config MTK_MERGE_INTERFACE_SUPPORT
 	  interface is set to 'y',
 	  otherwise merge interface is not used.
 
+
+config MTK_CONNFEM
+	tristate "MediaTek connfem driver"
+	depends on MTK_COMBO
+	help
+	  This config is used to choose
+	  if need to compile connfem folder.
+	  Will compile connfem folder if set to 'y',
+	  otherwise will not compile connfem folder.
+
+
 config MTK_COMBO_CHIP_DEEP_SLEEP_SUPPORT
 	depends on MTK_COMBO_CHIP_MT6632
 	default y
@@ -448,3 +459,10 @@ config MTK_CONNSYS_DEDICATED_LOG_PATH
 	     from connsys (by EMI or other specific path)
 	  2. The scope may include (but not limited) Wi-Fi firmware log,
 	     BT firmware log, GPS firmware log etc.
+
+config WLAN_DRV_BUILD_IN
+	bool "Build Wlan module in kernel"
+	help
+	  This will build the wlan driver and the corresponding componenets
+	  into the kernel.
+	  If unsure say n
