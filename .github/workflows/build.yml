@@ -1,0 +1,47 @@
+name: Build Kernel
+
+on:
+  workflow_dispatch:
+    inputs:
+      choice:
+        description: 'Upload artifact?'
+        required: false
+        type: boolean
+
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        submodules: 'recursive'
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get full-upgrade -y
+        sudo apt-get install -y bc bison build-essential ccache curl flex g++-multilib gcc-multilib git git-lfs gnupg gperf imagemagick lib32readline-dev lib32z1-dev libelf-dev liblz4-tool libsdl1.2-dev libssl-dev libxml2 libxml2-utils lzop pngcrush rsync schedtool squashfs-tools xsltproc zip zlib1g-dev --install-recommends
+
+
+    - name: Download toolchain
+      run: |
+        wget "https://android.googlesource.com/platform//prebuilts/clang/host/linux-x86/+archive/refs/tags/android-12.0.0_r1/clang-r383902.tar.gz"
+        mkdir -p toolchain/clang/host/linux-x86/clang-r383902
+        tar -xzf clang-r383902.tar.gz -C toolchain/clang/host/linux-x86/clang-r383902/
+        rm clang-r383902.tar.gz
+
+    - name: Build kernel
+      run: |
+        bash build_kernel.sh
+
+    - name: Upload image
+      if: ${{ github.event.inputs.choice == 'true' }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: artifact-name
+        path: arch/arm64/boot/Image
