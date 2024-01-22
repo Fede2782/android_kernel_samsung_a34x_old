@@ -9,7 +9,10 @@ on:
         type: boolean
 
   push:
-    branches: [ main ]
+    branches:
+      - 'sep-15/ksu'
+      - 'sep-15/connectivity'
+      - 'sep-15/stock'
 
 jobs:
   build:
@@ -17,7 +20,7 @@ jobs:
     steps:
 
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       with:
         submodules: 'recursive'
 
