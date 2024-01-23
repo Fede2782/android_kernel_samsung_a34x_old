@@ -42,9 +42,29 @@ jobs:
       run: |
         bash build_kernel.sh
 
+    - name: Download magiskboot utility
+      run: |
+        wget https://github.com/topjohnwu/Magisk/releases/latest/download/Magisk-v26.4.apk -O magisk.zip
+        unzip magisk.zip lib/x86_64/*
+        chmod +x lib/x86_64/*
+        mv libbusybox.so /usr/bin/busybox
+        mv libmagiskboot.so /usr/bin/magiskboot
+
+    - name: Build boot.img
+      run: |
+        wget https://github.com/Fede2782/proprietary_vendor_samsung_a34x/releases/latest/download/boot.img -O stock_boot.img
+        mkdir unpacked && cd unpacked
+        magiskboot unpack ../stock_boot.img
+        mv ../arch/arm64/boot/Image kernel
+        PATCHVBMETAFLAG=true magiskboot repack ../stock_boot.img
+        mv new-boot.img ../boot.img && cd ..
+
+
     - name: Upload image
       if: ${{ github.event.inputs.choice == 'true' }}
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: artifact-name
-        path: arch/arm64/boot/Image
+        path: |
+           arch/arm64/boot/Image
+           boot.img
