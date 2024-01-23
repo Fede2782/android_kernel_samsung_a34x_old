@@ -47,8 +47,8 @@ jobs:
         wget https://github.com/topjohnwu/Magisk/releases/latest/download/Magisk-v26.4.apk -O magisk.zip
         unzip magisk.zip lib/x86_64/*
         chmod +x lib/x86_64/*
-        mv libbusybox.so /usr/bin/busybox
-        mv libmagiskboot.so /usr/bin/magiskboot
+        mv lib/x86_64/libbusybox.so /usr/bin/busybox
+        mv lib/x86_64/libmagiskboot.so /usr/bin/magiskboot
 
     - name: Build boot.img
       run: |
