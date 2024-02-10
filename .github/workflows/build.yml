@@ -33,10 +33,10 @@ jobs:
 
     - name: Download toolchain
       run: |
-        wget "https://android.googlesource.com/platform//prebuilts/clang/host/linux-x86/+archive/refs/tags/android-12.0.0_r1/clang-r383902.tar.gz"
-        mkdir -p toolchain/clang/host/linux-x86/clang-r383902
-        tar -xzf clang-r383902.tar.gz -C toolchain/clang/host/linux-x86/clang-r383902/
-        rm clang-r383902.tar.gz
+        wget "https://android.googlesource.com/platform//prebuilts/clang/host/linux-x86/+archive/refs/tags/android-13.0.0_r1/clang-r450784d.tar.gz"
+        mkdir -p toolchain/clang/host/linux-x86/clang-r450784d
+        tar -xzf clang-r450784d.tar.gz -C toolchain/clang/host/linux-x86/clang-r450784d/
+        rm clang-r450784d.tar.gz
 
     - name: Build kernel
       run: |
@@ -45,7 +45,7 @@ jobs:
     - name: Download magiskboot utility
       if: ${{ github.event.inputs.choice == 'true' }}
       run: |
-        wget https://github.com/topjohnwu/Magisk/releases/latest/download/Magisk-v26.4.apk -O magisk.zip
+        wget https://github.com/topjohnwu/Magisk/releases/latest/download/Magisk-v27.0.apk -O magisk.zip
         unzip magisk.zip lib/x86_64/*
         chmod +x lib/x86_64/*
         sudo mv lib/x86_64/libbusybox.so /usr/bin/busybox
@@ -60,13 +60,12 @@ jobs:
         mv ../arch/arm64/boot/Image kernel
         PATCHVBMETAFLAG=true magiskboot repack ../stock_boot.img
         mv new-boot.img ../boot.img && cd ..
-
+        echo "### Successfully built kernel and boot image. Not suitable for daily use, please use with caution! :rocket:" >> $GITHUB_STEP_SUMMARY
 
     - name: Upload image
       if: ${{ github.event.inputs.choice == 'true' }}
       uses: actions/upload-artifact@v4
       with:
-        name: artifact-name
+        name: Boot Image
         path: |
-           arch/arm64/boot/Image
            boot.img
