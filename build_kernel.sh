@@ -1,10 +1,11 @@
 #!/bin/bash
 
-export PATH=$(pwd)/toolchain/clang/host/linux-x86/clang-r383902/bin:$PATH
-export CROSS_COMPILE=$(pwd)/toolchain/clang/host/linux-x86/clang-r383902/bin/aarch64-linux-gnu-
-export CC=$(pwd)/toolchain/clang/host/linux-x86/clang-r383902/bin/clang
+export PATH=$(pwd)/toolchain/clang/host/linux-x86/clang-r450784d/bin:$PATH
+export CROSS_COMPILE=$(pwd)/toolchain/clang/host/linux-x86/clang-r450784d/bin/aarch64-linux-gnu-
+export CC=$(pwd)/toolchain/clang/host/linux-x86/clang-r450784d/bin/clang
 export CLANG_TRIPLE=aarch64-linux-gnu-
 export ARCH=arm64
+export ANDROID_MAJOR_VERSION=u
 export PLATFORM_VERSION=14
 export TARGET_SOC=mt6877
 export TARGET_BUILD_VARIANT=user
