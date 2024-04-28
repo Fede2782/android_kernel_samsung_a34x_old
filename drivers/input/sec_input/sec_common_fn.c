@@ -1063,22 +1063,20 @@ int sec_input_device_register(struct device *dev, void *data)
 		return ret;
 	}
 
-	if (pdata->support_dex) {
-		/* register input_dev_pad */
-		pdata->input_dev_pad = devm_input_allocate_device(dev);
-		if (!pdata->input_dev_pad) {
-			input_err(true, dev, "%s: allocate input_dev_pad err!\n", __func__);
-			return -ENOMEM;
-		}
+	/* register input_dev_pad */
+	pdata->input_dev_pad = devm_input_allocate_device(dev);
+	if (!pdata->input_dev_pad) {
+		input_err(true, dev, "%s: allocate input_dev_pad err!\n", __func__);
+		return -ENOMEM;
+	}
 
-		pdata->input_dev_pad->name = "sec_touchpad";
-		sec_input_set_prop_pad(dev, pdata->input_dev_pad, INPUT_PROP_POINTER, data);
-		ret = input_register_device(pdata->input_dev_pad);
-		if (ret) {
-			input_err(true, dev, "%s: Unable to register %s input device\n",
-					__func__, pdata->input_dev_pad->name);
-			return ret;
-		}
+	pdata->input_dev_pad->name = "sec_touchpad";
+	sec_input_set_prop_pad(dev, pdata->input_dev_pad, INPUT_PROP_POINTER, data);
+	ret = input_register_device(pdata->input_dev_pad);
+	if (ret) {
+		input_err(true, dev, "%s: Unable to register %s input device\n",
+				__func__, pdata->input_dev_pad->name);
+		return ret;
 	}
 
 	if (pdata->support_ear_detect || pdata->support_lightsensor_detect) {
@@ -1504,8 +1502,8 @@ int sec_input_parse_dt(struct device *dev)
 		}
 	}
 
+	pdata->support_dex = true;
 	pdata->regulator_boot_on = of_property_read_bool(np, "sec,regulator_boot_on");
-	pdata->support_dex = of_property_read_bool(np, "support_dex_mode");
 	pdata->support_fod = of_property_read_bool(np, "support_fod");
 	pdata->support_fod_lp_mode = of_property_read_bool(np, "support_fod_lp_mode");
 	pdata->enable_settings_aot = of_property_read_bool(np, "enable_settings_aot");
