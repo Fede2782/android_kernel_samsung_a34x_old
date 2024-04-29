@@ -734,6 +734,7 @@ struct sec_ts_plat_data {
 
 	bool regulator_boot_on;
 	bool support_mt_pressure;
+	bool support_dex;
 	bool support_ear_detect;
 #if IS_ENABLED(CONFIG_INPUT_SEC_SECURE_TOUCH)
 	int ss_touch_num;
